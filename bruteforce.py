@@ -13,8 +13,19 @@ def serialize_data_from_csv(filepath):
     dataset = []
     for line in lines:
         data = line.split(',')
-        dataset.append((data[0], int(data[1]), int(data[2])))
+        dataset.append((data[0], float(data[1]), float(data[2])))
     return dataset
+
+
+def calculate_profit(results):
+    portfolio = results[1]
+    total = 0
+    for stock in portfolio:
+        profit = stock[1] * stock[2] / 100
+        print(f"{stock[0]:{' '}<{10}} {stock[1]:{' '}<{10}} {stock[2]}% {profit:{' '}^{10}}")
+        total += profit
+    print("Portfolio value:", sum(i[1] for i in portfolio))
+    print("Total profit:", "{:.2f}".format(total))
 
 
 def bruteforce(value, stocks, picked=[]):
@@ -35,4 +46,4 @@ def bruteforce(value, stocks, picked=[]):
 if __name__ == "__main__":
     stocks = serialize_data_from_csv(sys.argv[1])
     results = bruteforce(500, stocks)
-    print(results)
+    calculate_profit(results)
