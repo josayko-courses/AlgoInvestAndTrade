@@ -33,7 +33,9 @@ def calculate_profit(results):
 
 def bruteforce(value, stocks, picked=[]):
     """Try all possible combinations recursively to get the best profit return.
-
+    The algorithm start from the last element:
+    combi1 -> skip it
+    combi2 -> pick it
     Args:
         - value: maximum possible value of a combination
         - stocks: a list of tuples representing the stocks -> stocks = [(name, price, profit)]
@@ -43,14 +45,14 @@ def bruteforce(value, stocks, picked=[]):
         - A tuple -> (total profit, list of picked stocks)
     """
     if stocks:
-        # recursively call bruteforce by removing the first stock each time
+        # recursively call bruteforce and start to evaluate possibilities from the last item in stocks
+        # 1st possibility: skip the stock
         x, combi1 = bruteforce(value, stocks[1:], picked)
 
-        # pick the first stock if its price is less or equals to value
         pick = stocks[0]
         if pick[1] <= value:
-
-            #  add picked stock, update new value and recursively call bruteforce by removing it
+            # second possibility: pick the stock
+            # update new value
             y, combi2 = bruteforce(value - pick[1], stocks[1:], picked + [pick])
 
             # return the combination with the best profit
