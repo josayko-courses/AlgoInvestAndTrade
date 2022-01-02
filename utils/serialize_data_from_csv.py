@@ -15,5 +15,7 @@ def serialize_data_from_csv(filepath):
     dataset = []
     for line in lines:
         data = line.split(',')
-        dataset.append((data[0], float(data[1]), float(data[1]) * float(data[2]) / 100))
+        # Ignore stock data if its price is less or equals to zero
+        if float(data[1]) > 0:
+            dataset.append((data[0], float(data[1]), float(data[1]) * float(data[2]) / 100))
     return dataset
