@@ -12,12 +12,15 @@ def optimized(value, stocks):
     value = trunc(value)
     m = [[0 for column in range(value + 1)] for line in range(len(stocks) + 1)]
 
-    # Start from index 1 because no solutions in first line and first column
-    # Iterate for each line (or for each stock)
+    # Start from index 1 because no solutions in first line and first column (fill with 0's)
+    # Iterate for each line (each stock)
     for ln in range(1, len(stocks) + 1):
-        # Iterate for each column (or for each value)
+        # Iterate for each column (each value)
         for col in range(1, value + 1):
+            # if stock price is less or equals to actual value, pick it
             if stocks[ln - 1][1] <= col:
+                # compare optimized profits of previous line of actual value with
+                # (stock profit + optimized profits of previous line of [actual value - stock value])
                 m[ln][col] = max(stocks[ln - 1][2] + m[ln - 1][col - trunc(stocks[ln - 1][1])], m[ln - 1][col])
             else:
                 m[ln][col] = m[ln - 1][col]
