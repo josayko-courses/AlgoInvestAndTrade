@@ -8,19 +8,23 @@ from utils import serialize_data_from_csv, calculate_profit
 
 
 def optimized(value, stocks):
+    """Builds and evaluates a matrix of possible solutions to avoid redundant computations.
+    The best solution will be in last column of the last line or m[-1][-1].
+    """
     # Build a matrix of possible solutions
     value = trunc(value)
     m = [[0 for column in range(value + 1)] for line in range(len(stocks) + 1)]
 
     # Start from index 1 because no solutions in first line and first column (fill with 0's)
-    # Iterate for each line (each stock)
+    # Iterate for each stock
     for ln in range(1, len(stocks) + 1):
-        # Iterate for each column (each value)
+        # Iterate for each possible value
         for col in range(1, value + 1):
             # if stock price is less or equals to actual value, pick it
+            # otherwise skip it, optimized profits is same as previous stock
             if stocks[ln - 1][1] <= col:
-                # compare optimized profits of previous line of actual value with
-                # (stock profit + optimized profits of previous line of [actual value - stock value])
+                # compare optimized profits of actual value for previous stock with
+                # (stock profit + optimized profits for previous stock of [value = actual value - stock value])
                 m[ln][col] = max(stocks[ln - 1][2] + m[ln - 1][col - trunc(stocks[ln - 1][1])], m[ln - 1][col])
             else:
                 m[ln][col] = m[ln - 1][col]
@@ -29,6 +33,7 @@ def optimized(value, stocks):
     n = len(stocks)
     picked = []
 
+    # Retrieve picked stocks from the best solution
     while v >= 0 and n >= 0:
         pick = stocks[n - 1]
         if m[n][trunc(v)] == m[n - 1][trunc(v - pick[1])] + pick[2]:
