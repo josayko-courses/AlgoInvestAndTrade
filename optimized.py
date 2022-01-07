@@ -45,5 +45,5 @@ def optimized(value, stocks):
 
 if __name__ == "__main__":
     stocks = serialize_data_from_csv(sys.argv[1])
-    results = optimized(500.56, stocks)
+    results = optimized(500, stocks)
     calculate_profit(results)

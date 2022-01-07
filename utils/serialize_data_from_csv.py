@@ -18,4 +18,5 @@ def serialize_data_from_csv(filepath):
         # Ignore stock data if its price is less or equals to zero
         if float(data[1]) > 0:
             dataset.append((data[0], float(data[1]), float(data[1]) * float(data[2]) / 100))
+    dataset = sorted(dataset, key=lambda x: x[1], reverse=True)
     return dataset
