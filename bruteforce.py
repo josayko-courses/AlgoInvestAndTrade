@@ -38,6 +38,7 @@ def bruteforce(value, stocks, picked=[]):
 
 
 if __name__ == "__main__":
-    stocks = serialize_data_from_csv(sys.argv[1])
-    results = bruteforce(500, stocks)
-    calculate_profit(results)
+    if len(sys.argv) > 1:
+        stocks = serialize_data_from_csv(sys.argv[1])
+        results = bruteforce(500, stocks)
+        calculate_profit(results)

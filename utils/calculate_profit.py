@@ -11,4 +11,4 @@ def calculate_profit(results):
     valuation = sum(i[1] for i in results[1])
     print("Portfolio value:", f"{valuation:.2f}", "€")
     print("Return profits:", "{:.2f}".format(results[0]), "€")
-    print("Total valuation:", "{:.2f}".format(valuation + results[0]), "€")
+    # print("Total valuation:", "{:.2f}".format(valuation + results[0]), "€")

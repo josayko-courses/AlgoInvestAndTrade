@@ -33,17 +33,19 @@ def optimized(value, stocks):
     n = len(stocks)
     picked = []
 
-    # Retrieve picked stocks from the best solution
+    # Retrieve picked stocks from the last stock in the matrix until value is zero
     while v >= 0 and n >= 0:
-        pick = stocks[n - 1]
-        if m[n][trunc(v)] == m[n - 1][trunc(v - pick[1])] + pick[2]:
-            picked.append(pick)
-            v -= pick[1]
+        p = stocks[n - 1]
+        # Optimized profit is equals to stock profit + optimized profits for previous stock of [value = actual value - stock value]
+        if m[n][trunc(v)] == m[n - 1][trunc(v - p[1])] + p[2]:
+            picked.append(p)
+            v -= p[1]
         n -= 1
     return m[-1][-1], picked
 
 
 if __name__ == "__main__":
-    stocks = serialize_data_from_csv(sys.argv[1])
-    results = optimized(500, stocks)
-    calculate_profit(results)
+    if len(sys.argv) > 1:
+        stocks = serialize_data_from_csv(sys.argv[1])
+        results = optimized(500, stocks)
+        calculate_profit(results)
